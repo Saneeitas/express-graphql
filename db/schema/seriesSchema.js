@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-export const seriesSchema = new mongoose.Schema({
+ const seriesSchema = new mongoose.Schema({
     seriesName: {
         type: String
     },
@@ -11,3 +11,5 @@ export const seriesSchema = new mongoose.Schema({
         type: String
     }
 });
+
+module.exports = {seriesSchema}
