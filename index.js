@@ -2,7 +2,7 @@ const express = require("express")
 const  {ApolloServer} = require("apollo-server-express");
 const {resolvers} = require("./data/resolvers.graphql");
 const {typeDefs} = require("./data/schema.graphql");
-const PORT =  require("./config/config");
+const {PORT} =  require("./config/config");
 
 /**
  * Create an Apollo server instance.

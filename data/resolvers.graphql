@@ -6,22 +6,23 @@ const { Friends, Series } = require('../db/dbConnector.js');
 
 const resolvers = {
     Query: {
-        getAllFriend: (root) => {
-            return new Promise((resolve, reject) => {
-                Friends.find((err, friends) => {
-                    if (err) reject(err);
-                    else resolve(friends);
-                });
-            });
+        getAllFriend: async (root) => {
+            try {
+                const friends = await Friends.find().exec();
+                return friends;
+            } catch (err) {
+                throw err;
+            }
         },
-        findASeries: (root, { id }) => {
-            return new Promise((resolve, reject) => {
-                Series.findOne({ _id: id }, (err, series) => {
-                    if (err) reject(err);
-                    else resolve(series);
-                });
-            });
+        findASeries: async (root, { id }) => {
+            try {
+                const series = await Series.findOne({ _id: id }).exec();
+                return series;
+            } catch (err) {
+                throw err;
+            }
         },
+
     },
     Mutation: {
         createFriend: (root, { input }) => {
@@ -37,12 +38,14 @@ const resolvers = {
 
             newFriend.id = newFriend._id;
 
-            return new Promise((resolve, reject) => {
-                newFriend.save((err) => {
-                    if (err) reject(err);
-                    else resolve(newFriend);
-                });
+          return newFriend.save()
+            .then(savedFriend => {
+                return savedFriend; 
+            })
+            .catch(err => {
+                throw err; 
             });
+
         },
         addASeries: (root, { series }) => {
             const newSeries = new Series({
@@ -53,12 +56,14 @@ const resolvers = {
 
             newSeries.id = series._id;
 
-            return new Promise((resolve, reject) => {
-                newSeries.save((err) => {
-                    if (err) reject(err);
-                    resolve(newSeries);
+            return newSeries.save()
+                .then(savedSeries => {
+                    return savedSeries; 
+                })
+                .catch(err => {
+                    throw err;
                 });
-            });
+
         },
     },
 };

@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 const { environment } = require('../config/config');
 const { friendSchema } = require('./schema/friendSchema.js');
 const { seriesSchema } = require('./schema/seriesSchema.js');
-const {env} = process.env.NODE_ENV || "development";
+const env = process.env.NODE_ENV || "development";
 
 /**
  * Mongoose Connection
 **/
 
 mongoose.set("strictQuery", true);
-mongoose.connect(environment.development.dbString)
+mongoose.connect(environment[env].dbString)
   .then(() => {
     console.log("Connected to the database");
   })
